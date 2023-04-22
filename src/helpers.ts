@@ -23,13 +23,13 @@ export function inverseSelected(user: UserInterface) {
 }
 
 export function changeUserStatusAndDateFormat(user: UserInterface) {
-    const options = {
+    const options: Intl.DateTimeFormatOptions = {
         year: 'numeric',
         month: 'numeric',
         day: 'numeric',
         hour:'numeric',
         minute: 'numeric',
-        timezone: 'UTC'
+        timeZone: 'UTC'
     };
     if (user.userStatus === 'X') {
         user.userStatus = 'R';

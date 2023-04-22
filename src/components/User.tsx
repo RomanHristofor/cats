@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
+import {redirect} from 'react-router-dom'
 import Loader from './common/Loader'
 import {loadUser, selectedUser} from '../AC'
 import {LoadUserInterface, UserInterface} from '../reducer/users'
@@ -27,9 +27,10 @@ type Props = {
 }
 
 
-class User extends Component<Props> {
+class User extends Component<Props, any> {
     componentDidMount() {
         const {loading, loadUser, userLoad, user, clearUser, selectedUser} = this.props;
+        debugger
         if (!loading) {
             if (clearUser && clearUser.id) { //clear selected user for History back
                 selectedUser(inverseSelected(clearUser));
@@ -58,9 +59,12 @@ class User extends Component<Props> {
 
     render() {
         const {user, loading} = this.props;
+        console.log('render USER', this.props);
+
         if (loading) return <Loader/>
-        if (!user || (user && user.userStatus === 'R'))
-            return <Redirect to='/cats'/>
+        if (!user || (user && user.userStatus === 'R')) {
+            return <>{redirect('/cats')}</>
+        }
 
         return (
             <div>
@@ -74,6 +78,7 @@ class User extends Component<Props> {
 
     getBody() {
         const {userLoad, user} = this.props;
+        debugger
         if (!user || !userLoad) return null;
 
         return (

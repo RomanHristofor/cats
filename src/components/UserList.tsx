@@ -19,7 +19,7 @@ type Props = {
     selectedUser: (user: UserInterface) => void
 }
 
-class UsersList extends Component<Props> {
+class UsersList extends Component<Props, any> {
     state = {
         isSelectedUser: true
     }

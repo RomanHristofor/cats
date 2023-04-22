@@ -1,46 +1,51 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
+import { Route, BrowserRouter as RouterRoutes, useParams } from 'react-router-dom';
 import {connect} from "react-redux"
-import {Route, RouteComponentProps, RouteProps} from 'react-router-dom'
 import User from './User'
 import UserList from './UserList'
 import {UserInterface} from '../reducer/users'
 import {RootState, entitiesSelector} from "../selectors"
 import {Main} from './css'
 
-interface RouterProps {
-    id: string
+interface Props {
+    entities: UserInterface[];
+    children?: React.ReactElement;
 }
 
-interface Props extends RouteProps {
-    entities: UserInterface[]
-}
 
-class Routes extends Component<Props> {
-    getIndex = ({match}: RouteComponentProps<RouterProps>) => {
-        const {id} = match.params;
-        return <User
-            id={id} key={id}
-            selectedUser={()=>{}}
-            loadUser={()=>{}}
+const Index = () => {
+    const { id } = useParams();
+    console.log('getIndex ID', id);
+    return (
+        <User
+            id={id}
+            key={id}
+            selectedUser={() => {}}
+            loadUser={() => {}}
         />
-    };
+    );
+};
+const FindSelectedUser = (props: any) => {
+    const {entities} = props;
+    const getUser = entities.find((item: any) => item.isSelected);
+    return (<User
+        clearUser={getUser}
+        selectedUser={()=>{}}
+        loadUser={()=>{}}
+    />)
+};
 
-    findSelectedUser = () => {
-        const {entities} = this.props;
-        const getUser = entities.find(item => item.isSelected);
-        return <User
-            clearUser={getUser}
-            selectedUser={()=>{}}
-            loadUser={()=>{}}
-        />
-    };
-
+class Routes extends Component<Props, any> {
     render() {
         return (
             <Main>
-                <UserList/>
-                <Route path="/cats" render={this.findSelectedUser} exact/>
-                <Route path="/cats/:id" render={this.getIndex}/>
+                <>
+                    <UserList/>
+                    <RouterRoutes>
+                        <Route path="/cats" element={<FindSelectedUser />} />
+                        <Route path="/cats/:id" element={<Index />} />
+                    </RouterRoutes>
+                </>
             </Main>
         )
     }

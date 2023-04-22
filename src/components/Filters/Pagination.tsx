@@ -11,7 +11,7 @@ type Props = {
     changePages: Function
 } & StateFiltersInterface
 
-class PaginationFilter extends Component<Props> {
+class PaginationFilter extends Component<Props, any> {
 
     handlePageChange = (page: number) => {
         const {changePages, pagination} = this.props;
@@ -35,6 +35,7 @@ class PaginationFilter extends Component<Props> {
 
         return (
             <div>
+                <></>
                 <Pagination
                     activePage={pagination.page}
                     itemsCountPerPage={pagination.pageSize}
