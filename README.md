@@ -20,4 +20,4 @@ Tools:
 - gh-pages (deploy)
 
 
-page view - https://romanhristofor.github.io/mrsoft_tz20ts
+page view - https://romanhristofor.github.io/cats
