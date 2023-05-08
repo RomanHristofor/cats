@@ -1,21 +1,18 @@
-import React, {Component, Fragment} from 'react'
-import { Route, BrowserRouter as RouterRoutes, useParams } from 'react-router-dom';
-import {connect} from "react-redux"
+import React from 'react'
+import { Route, Routes, useParams } from 'react-router-dom';
 import User from './User'
 import UserList from './UserList'
 import {UserInterface} from '../reducer/users'
-import {RootState, entitiesSelector} from "../selectors"
-import {Main} from './css'
+import Cats from "./Cats";
 
-interface Props {
-    entities: UserInterface[];
+interface IProps {
+    entities?: UserInterface[];
     children?: React.ReactElement;
 }
 
 
 const Index = () => {
     const { id } = useParams();
-    console.log('getIndex ID', id);
     return (
         <User
             id={id}
@@ -35,22 +32,16 @@ const FindSelectedUser = (props: any) => {
     />)
 };
 
-class Routes extends Component<Props, any> {
-    render() {
-        return (
-            <Main>
-                <>
-                    <UserList/>
-                    <RouterRoutes>
-                        <Route path="/cats" element={<FindSelectedUser />} />
-                        <Route path="/cats/:id" element={<Index />} />
-                    </RouterRoutes>
-                </>
-            </Main>
-        )
-    }
+const MainRoutes = () => {
+    return (
+        <>
+            <UserList />
+            <Routes>
+                <Route path="/cats" element={<FindSelectedUser />} />
+                <Route path="/cats/:id" element={<Index />} />
+            </Routes>
+        </>
+    )
 }
 
-export default connect((state: RootState) => ({
-    entities: entitiesSelector(state),
-}))(Routes)
+export default MainRoutes;

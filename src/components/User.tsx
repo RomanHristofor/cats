@@ -30,7 +30,7 @@ type Props = {
 class User extends Component<Props, any> {
     componentDidMount() {
         const {loading, loadUser, userLoad, user, clearUser, selectedUser} = this.props;
-        debugger
+
         if (!loading) {
             if (clearUser && clearUser.id) { //clear selected user for History back
                 selectedUser(inverseSelected(clearUser));
@@ -59,7 +59,6 @@ class User extends Component<Props, any> {
 
     render() {
         const {user, loading} = this.props;
-        console.log('render USER', this.props);
 
         if (loading) return <Loader/>
         if (!user || (user && user.userStatus === 'R')) {
@@ -78,7 +77,6 @@ class User extends Component<Props, any> {
 
     getBody() {
         const {userLoad, user} = this.props;
-        debugger
         if (!user || !userLoad) return null;
 
         return (
